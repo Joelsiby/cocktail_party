@@ -41,7 +41,7 @@ export default function App() {
       {/* Clean Background Video */}
       <BackgroundVideo isMuted={isMuted} isPlaying={isPlaying} />
 
-      {/* Subtle Floating Mute/Unmute Icon Button in Top Right */}
+      {/* Subtle Floating Mute/Unmute Icon Button in Top Right test*/}
       <button
         onClick={(e) => {
           e.stopPropagation(); // Prevents map redirect when toggling sound
