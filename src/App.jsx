@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import BackgroundVideo from './components/BackgroundVideo';
 import HeroSection from './components/HeroSection';
 import ScheduleSection from './components/ScheduleSection';
@@ -6,13 +6,15 @@ import VenueSection from './components/VenueSection';
 import RsvpModal from './components/RsvpModal';
 import DesktopLightPrompt from './components/DesktopLightPrompt';
 import MobileFrameWrapper from './components/MobileFrameWrapper';
+import EnvelopeIntro from './components/EnvelopeIntro';
 
 export default function App() {
-  const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isRsvpOpen, setIsRsvpOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
-  
+  const [showEnvelope, setShowEnvelope] = useState(true);
+  const musicRef = useRef(null);
+
   // viewMode: 'auto' | 'phoneFrame' | 'desktopModal'
   const [viewMode, setViewMode] = useState('auto');
 
@@ -27,9 +29,32 @@ export default function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Keep the background music track in sync with isPlaying (once it has started)
+  useEffect(() => {
+    const audio = musicRef.current;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio.play().catch(() => {});
+    } else {
+      audio.pause();
+    }
+  }, [isPlaying]);
+
   const handleRedirectToMaps = () => {
     const mapsUrl = "https://www.google.com/maps/search/?api=1&query=Cochin+Yacht+Club,+W8V3%2B6JR,+Yacht+Club+Enclave+Rd,+Priyadarshini+Nagar,+Konthuruthy,+Thevara,+Kochi,+Ernakulam,+Kerala+682013";
     window.open(mapsUrl, "_blank");
+  };
+
+  const togglePlay = () => {
+    setIsPlaying((prev) => !prev);
+  };
+
+  // Background music (cocktail_music.mp3) only starts once the guest opens
+  // the envelope / taps the logo — the video's own audio track stays off.
+  const handleStartMusic = () => {
+    setIsPlaying(true);
+    musicRef.current?.play().catch(() => {});
   };
 
   // Clean Video View Content (Clicking anywhere redirects to Cochin Yacht Club on Maps)
@@ -38,29 +63,57 @@ export default function App() {
       onClick={handleRedirectToMaps}
       className="relative w-full h-full min-h-screen overflow-hidden cursor-pointer select-none"
     >
-      {/* Clean Background Video */}
-      <BackgroundVideo isMuted={isMuted} isPlaying={isPlaying} />
+      {/* Clean Background Video — video's own audio track stays off; music comes from cocktail_music.mp3 below */}
+      <BackgroundVideo isMuted={true} isPlaying={isPlaying} />
 
-      {/* Subtle Floating Mute/Unmute Icon Button in Top Right test*/}
-      <button
-        onClick={(e) => {
-          e.stopPropagation(); // Prevents map redirect when toggling sound
-          toggleMute();
-        }}
-        className="fixed top-4 right-4 z-30 p-3 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white border border-white/20 backdrop-blur-sm transition-all active:scale-95 shadow-lg"
-        title={isMuted ? "Unmute Sound" : "Mute Sound"}
-      >
-        {isMuted ? (
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+      {/* Background Music Track */}
+      <audio ref={musicRef} src="/cocktail_music.mp3" loop preload="auto" />
+
+      {/* Bottom Right Floating Controls: Music Play/Pause + Maps (Liquid Glass) */}
+      <div className="fixed bottom-6 right-4 z-30 flex flex-col items-center gap-3">
+        {/* Music Play/Pause Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            togglePlay();
+          }}
+          title={isPlaying ? "Pause Music" : "Play Music"}
+          className="group relative w-12 h-12 rounded-full flex items-center justify-center text-white/90 hover:text-white border border-white/25 bg-white/10 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.35),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all active:scale-90 overflow-hidden"
+        >
+          {/* Liquid glass sheen */}
+          <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br from-white/30 via-white/5 to-transparent" />
+          <span className="pointer-events-none absolute -top-2 -left-2 w-6 h-6 rounded-full bg-white/30 blur-md" />
+
+          {isPlaying ? (
+            <svg className="relative w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="5" width="4" height="14" rx="1" />
+              <rect x="14" y="5" width="4" height="14" rx="1" />
+            </svg>
+          ) : (
+            <svg className="relative w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 5.5v13a1 1 0 001.5.87l11-6.5a1 1 0 000-1.74l-11-6.5A1 1 0 007 5.5z" />
+            </svg>
+          )}
+        </button>
+
+        {/* Maps Button */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleRedirectToMaps();
+          }}
+          title="Open in Google Maps"
+          className="group relative w-12 h-12 rounded-full flex items-center justify-center text-white/90 hover:text-white border border-white/25 bg-white/10 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.35),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all active:scale-90 overflow-hidden"
+        >
+          <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br from-white/30 via-white/5 to-transparent" />
+          <span className="pointer-events-none absolute -top-2 -left-2 w-6 h-6 rounded-full bg-white/30 blur-md" />
+
+          <svg className="relative w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-        ) : (
-          <svg className="w-5 h-5 text-amber-300 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-          </svg>
-        )}
-      </button>
+        </button>
+      </div>
     </div>
   );
 
@@ -73,15 +126,29 @@ export default function App() {
     );
   }
 
+  // Envelope intro overlay: sits above the invite, starts the music on open
+  const envelopeOverlay = showEnvelope && (
+    <EnvelopeIntro
+      onOpen={handleStartMusic}
+      onOpenComplete={() => setShowEnvelope(false)}
+    />
+  );
+
   // If on desktop screen AND user chose 'phoneFrame':
   if (isDesktop && viewMode === 'phoneFrame') {
     return (
       <MobileFrameWrapper onShowDesktopModal={() => setViewMode('desktopModal')}>
         {invitationContent}
+        {envelopeOverlay}
       </MobileFrameWrapper>
     );
   }
 
   // Pure Mobile Device View
-  return invitationContent;
+  return (
+    <>
+      {invitationContent}
+      {envelopeOverlay}
+    </>
+  );
 }
