@@ -164,11 +164,11 @@ export default function EnvelopeIntro({ onOpen, onOpenComplete }) {
           >
             <img src="/logo.png" className="w-32 h-32 object-contain drop-shadow-2xl" alt="Agin & Aarati" />
             <p
-              className={`mt-6 font-cursive text-2xl text-amber-100 tracking-[0.05em] transition-opacity duration-300 ${
+              className={`mt-6 font-cursive text-2xl text-[#3a332c] tracking-[0.05em] transition-opacity duration-300 ${
                 isOpen ? 'opacity-0' : 'animate-pulse'
               }`}
             >
-              Tap to open
+              Click to open
             </p>
           </div>
         )}
