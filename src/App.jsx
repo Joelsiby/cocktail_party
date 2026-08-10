@@ -30,7 +30,7 @@ export default function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Keep the background music track in sync with isPlaying (once it has started)
+  // Keep the background test music track in sync with isPlaying (once it has started)
   useEffect(() => {
     const audio = musicRef.current;
     if (!audio) return;
