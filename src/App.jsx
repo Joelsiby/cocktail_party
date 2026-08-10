@@ -9,6 +9,7 @@ import MobileFrameWrapper from './components/MobileFrameWrapper';
 import EnvelopeIntro from './components/EnvelopeIntro';
 
 export default function App() {
+  // Controls only the background music track — the video always keeps playing
   const [isPlaying, setIsPlaying] = useState(true);
   const [isRsvpOpen, setIsRsvpOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
@@ -63,8 +64,8 @@ export default function App() {
       onClick={handleRedirectToMaps}
       className="relative w-full h-full min-h-screen overflow-hidden cursor-pointer select-none"
     >
-      {/* Clean Background Video — video's own audio track stays off; music comes from cocktail_music.mp3 below */}
-      <BackgroundVideo isMuted={true} isPlaying={isPlaying} />
+      {/* Clean Background Video — always plays, silently; the play/pause button only controls the music track below */}
+      <BackgroundVideo isMuted={true} isPlaying={true} />
 
       {/* Background Music Track */}
       <audio ref={musicRef} src="/cocktail_music.mp3" loop preload="auto" />
