@@ -13,7 +13,7 @@
   }
 }
 
-/* Custom scrollbar utility for mobile cards */
+/* Custom scrollbar and utility for mobile cards */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
