@@ -7,6 +7,7 @@ import RsvpModal from './components/RsvpModal';
 import DesktopLightPrompt from './components/DesktopLightPrompt';
 import MobileFrameWrapper from './components/MobileFrameWrapper';
 import EnvelopeIntro from './components/EnvelopeIntro';
+import WelcomeNote from './components/WelcomeNote';
 
 export default function App() {
   // Controls only the background music track — the video always keeps playing
@@ -66,6 +67,9 @@ export default function App() {
     >
       {/* Clean Background Video — always plays, silently; the play/pause button only controls the music track below */}
       <BackgroundVideo isMuted={true} isPlaying={true} />
+
+      {/* Warm welcome, shown once the envelope has opened */}
+      {!showEnvelope && <WelcomeNote />}
 
       {/* Background Music Track */}
       <audio ref={musicRef} src="/cocktail_music.mp3" loop preload="auto" />

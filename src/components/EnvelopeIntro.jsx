@@ -162,13 +162,19 @@ export default function EnvelopeIntro({ onOpen, onOpenComplete }) {
               transform: 'translate(-50%, -50%) translate3d(0, 25px, 800px)',
             }}
           >
-            <img src="/logo.png" className="w-32 h-32 object-contain drop-shadow-2xl" alt="Agin & Aarati" />
+            <p className="mb-3 text-lg text-[#3a332c]" style={{ fontFamily: "'Manjari', serif" }}>
+              സ്വാഗതം
+            </p>
+            <img src="/logo.png" className="w-32 h-32 object-contain drop-shadow-2xl" alt="Nivethitha & Mithun" />
             <p
               className={`mt-6 font-cursive text-2xl text-[#3a332c] tracking-[0.05em] transition-opacity duration-300 ${
                 isOpen ? 'opacity-0' : 'animate-pulse'
               }`}
             >
-              Click to open
+              Tap to open
+            </p>
+            <p className="mt-1 text-[11px] tracking-widest uppercase text-[#3a332c]/70">
+              Sangeet of Nivethitha &amp; Mithun
             </p>
           </div>
         )}
