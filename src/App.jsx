@@ -68,7 +68,7 @@ export default function App() {
       <BackgroundVideo isMuted={true} isPlaying={true} />
 
       {/* Background Music Track */}
-      <audio ref={musicRef} src="/cocktail_music.mp3" loop preload="auto" />
+      <audio ref={musicRef} src="/cocktail_music_1.mp3" loop preload="auto" />
 
       {/* Bottom Right Floating Controls: Music Play/Pause + Maps (Liquid Glass) */}
       <div className="fixed bottom-6 right-4 z-30 flex flex-col items-center gap-3">
