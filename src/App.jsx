@@ -43,7 +43,7 @@ export default function App() {
   }, [isPlaying]);
 
   const handleRedirectToMaps = () => {
-    const mapsUrl = "https://www.google.com/maps/search/?api=1&query=Cochin+Yacht+Club,+W8V3%2B6JR,+Yacht+Club+Enclave+Rd,+Priyadarshini+Nagar,+Konthuruthy,+Thevara,+Kochi,+Ernakulam,+Kerala+682013";
+    const mapsUrl = "https://share.google/FdfHUFTajhjECahJA";
     window.open(mapsUrl, "_blank");
   };
 
@@ -58,7 +58,7 @@ export default function App() {
     musicRef.current?.play().catch(() => {});
   };
 
-  // Clean Video View Content (Clicking anywhere redirects to Cochin Yacht Club on Maps)
+  // Clean Video View Content (Clicking anywhere redirects to the venue on Maps)
   const invitationContent = (
     <div
       onClick={handleRedirectToMaps}
