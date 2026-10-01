@@ -63,11 +63,10 @@ export default function App() {
     musicRef.current?.play().catch(() => {});
   };
 
-  // Clean Video View Content (Clicking anywhere redirects to the venue on Maps)
+  // Clean Video View Content (only the Maps button leads to the venue)
   const invitationContent = (
     <div
-      onClick={handleRedirectToMaps}
-      className="relative w-full h-full min-h-screen overflow-hidden cursor-pointer select-none"
+      className="relative w-full h-full min-h-screen overflow-hidden select-none"
     >
       {/* Clean Background Video — always plays, silently; the play/pause button only controls the music track below */}
       <BackgroundVideo isMuted={true} isPlaying={true} />
