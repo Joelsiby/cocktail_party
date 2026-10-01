@@ -26,7 +26,7 @@ export default function BackgroundVideo({ isMuted, isPlaying }) {
       {/* Background Video */}
       <video
         ref={videoRef}
-        src="/assets/cocktailparty_invitation_1.mp4"
+        src="/assets/nivethitha_mithun_sangeet.mp4"
         autoPlay
         loop
         muted={isMuted}
