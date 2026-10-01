@@ -43,7 +43,12 @@ export default function App() {
   }, [isPlaying]);
 
   const handleRedirectToMaps = () => {
-    const mapsUrl = "https://share.google/FdfHUFTajhjECahJA";
+    // iPhones/iPads open Apple Maps; everything else opens the Google Maps link
+    const isApple = /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const mapsUrl = isApple
+      ? "https://maps.apple.com/?q=" + encodeURIComponent("OG's Tharavadu, Ollaril Rd, Panangad, Ernakulam, Kerala 682506")
+      : "https://maps.app.goo.gl/57eSqqktV1f65i4r6";
     window.open(mapsUrl, "_blank");
   };
 
