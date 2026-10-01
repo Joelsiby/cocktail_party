@@ -162,7 +162,7 @@ export default function EnvelopeIntro({ onOpen, onOpenComplete }) {
               transform: 'translate(-50%, -50%) translate3d(0, 25px, 800px)',
             }}
           >
-            <img src="/nm_logo_sangeet.png" className="w-[140px] h-[97px] object-contain drop-shadow-2xl" alt="Nivethitha & Mithun" />
+            <img src="/nm_logo_sangeet.png" className="w-[126px] h-[87px] object-contain drop-shadow-2xl" alt="Nivethitha & Mithun" />
             <p
               className={`mt-6 font-cursive text-2xl text-[#3a332c] tracking-[0.05em] transition-opacity duration-300 ${
                 isOpen ? 'opacity-0' : 'animate-pulse'
