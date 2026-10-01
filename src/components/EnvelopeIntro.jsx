@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
  * https://github.com/Joelsiby/agin_aarti (Agin & Aarati's wedding site):
  * a single triangular envelope-paper image (/envelop_new.png) reused four
  * times (rotated 0/90/180/270°) to form the four flaps of a closed envelope,
- * sealed with the couple's wax-seal monogram (/logo.png).
+ * sealed with the couple's wax-seal monogram (/nm_logo_sangeet.png).
  *
  * Tap the envelope / wax seal:
  *   1. Fires onOpen() immediately (used to start the music on the same tap)
@@ -162,7 +162,7 @@ export default function EnvelopeIntro({ onOpen, onOpenComplete }) {
               transform: 'translate(-50%, -50%) translate3d(0, 25px, 800px)',
             }}
           >
-            <img src="/logo.png" className="w-32 h-32 object-contain drop-shadow-2xl" alt="Nivethitha & Mithun" />
+            <img src="/nm_logo_sangeet.png" className="w-52 h-36 object-contain drop-shadow-2xl" alt="Nivethitha & Mithun" />
             <p
               className={`mt-6 font-cursive text-2xl text-[#3a332c] tracking-[0.05em] transition-opacity duration-300 ${
                 isOpen ? 'opacity-0' : 'animate-pulse'
