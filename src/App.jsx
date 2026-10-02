@@ -43,12 +43,7 @@ export default function App() {
   }, [isPlaying]);
 
   const handleRedirectToMaps = () => {
-    // iPhones/iPads open Apple Maps; everything else opens the Google Maps link
-    const isApple = /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
-      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-    const mapsUrl = isApple
-      ? "https://maps.apple.com/?q=" + encodeURIComponent("OG's Tharavadu, Ollaril Rd, Panangad, Ernakulam, Kerala 682506")
-      : "https://maps.app.goo.gl/57eSqqktV1f65i4r6";
+    const mapsUrl = "https://www.google.com/maps/search/?api=1&query=Cochin+Yacht+Club,+W8V3%2B6JR,+Yacht+Club+Enclave+Rd,+Priyadarshini+Nagar,+Konthuruthy,+Thevara,+Kochi,+Ernakulam,+Kerala+682013";
     window.open(mapsUrl, "_blank");
   };
 
@@ -63,16 +58,17 @@ export default function App() {
     musicRef.current?.play().catch(() => {});
   };
 
-  // Clean Video View Content (only the Maps button leads to the venue)
+  // Clean Video View Content (Clicking anywhere redirects to Cochin Yacht Club on Maps)
   const invitationContent = (
     <div
-      className="relative w-full h-full min-h-screen overflow-hidden select-none"
+      onClick={handleRedirectToMaps}
+      className="relative w-full h-full min-h-screen overflow-hidden cursor-pointer select-none"
     >
       {/* Clean Background Video — always plays, silently; the play/pause button only controls the music track below */}
       <BackgroundVideo isMuted={true} isPlaying={true} />
 
       {/* Background Music Track */}
-      <audio ref={musicRef} src="/cocktail_music_1.mp3" loop preload="auto" />
+      <audio ref={musicRef} src="/cocktail_music.mp3" loop preload="auto" />
 
       {/* Bottom Right Floating Controls: Music Play/Pause + Maps (Liquid Glass) */}
       <div className="fixed bottom-6 right-4 z-30 flex flex-col items-center gap-3">
